@@ -1,6 +1,7 @@
 seaborn
 matplotlib
-scikit-learn
-flask
+fastapi
+uvicorn
 pandas
+scikit-learn
 numpy
