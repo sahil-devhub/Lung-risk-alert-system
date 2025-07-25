@@ -32,18 +32,32 @@ class PatientData(BaseModel):
 @app.post("/predict")
 def predict(data: PatientData):
     try:
+        # Convert to dict
         input_dict = data.dict()
-        print("🔍 Incoming Data:", input_dict)
 
+        # Manual mapping to match training column names
+        col_map = {
+            "CHRONIC_DISEASE": "CHRONIC DISEASE",
+            "ALCOHOL_CONSUMING": "ALCOHOL CONSUMING",
+            "SHORTNESS_OF_BREATH": "SHORTNESS OF BREATH",
+            "SWALLOWING_DIFFICULTY": "SWALLOWING DIFFICULTY",
+            "CHEST_PAIN": "CHEST PAIN"
+        }
+
+        # Apply mapping
+        for k_old, k_new in col_map.items():
+            input_dict[k_new] = input_dict.pop(k_old)
+
+        # Create input DataFrame
         df = pd.DataFrame([input_dict])
-        df.columns = [col.upper().replace(" ", "_") for col in df.columns]
-        print("🧾 DataFrame:", df)
 
-        df = df[feature_ref.columns]  # reordering
-        print("✅ Columns matched:", df.columns)
+        # Match training column order
+        df = df[feature_ref.columns]
 
+        # Predict
         prediction = int(model.predict(df)[0])
         probability = float(model.predict_proba(df)[0][1])
+
         return {
             "prediction": prediction,
             "probability": round(probability, 4)
