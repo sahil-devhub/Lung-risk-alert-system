@@ -2,9 +2,35 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pickle
 import pandas as pd
+from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
 
 app = FastAPI()
 
+# Define the origins that are allowed to make requests to your API.
+# It's crucial to include the domain where your Hopweb app will be hosted.
+# For testing, you can use "*" to allow all origins, but for production,
+# specify the exact domains for better security.
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "https://your-hopweb-app-domain.com", # <--- IMPORTANT: Replace with your actual Hopweb app domain
+    "https://lung-risk-alert-system.onrender.com", # If your frontend is also hosted here
+    # If running the HTML file directly from your local machine (file://),
+    # the origin might be 'null'. You can add it for local testing,
+    # but be cautious with it in production as it's less secure.
+    # "null"
+    "*" # For development/testing, allows all origins. REMOVE OR RESTRICT FOR PRODUCTION!
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,       # List of allowed origins
+    allow_credentials=True,      # Allow cookies/authentication headers to be sent
+    allow_methods=["*"],         # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],         # Allow all headers
+)
+
+# Load your model and feature reference
 model = pickle.load(open("lung_cancer_model.pkl", "rb"))
 feature_ref = pickle.load(open("feature_reference.pkl", "rb"))
 
@@ -77,3 +103,4 @@ def predict(data: PatientData):
     except Exception as e:
         print("❌ Error:", e)
         return {"error": str(e)}
+
