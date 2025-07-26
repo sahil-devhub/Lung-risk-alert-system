@@ -7,19 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
 app = FastAPI()
 
 # Define the origins that are allowed to make requests to your API.
-# It's crucial to include the domain where your Hopweb app will be hosted.
-# For testing, you can use "*" to allow all origins, but for production,
-# specify the exact domains for better security.
+# For local app testing where the origin might be 'null' (e.g., in a webview from a local file).
+# For production, always specify exact domains and avoid 'null' or '*'.
 origins = [
     "http://localhost",
     "http://localhost:8080",
-    "https://your-hopweb-app-domain.com", # <--- IMPORTANT: Replace with your actual Hopweb app domain
-    "https://lung-risk-alert-system.onrender.com", # If your frontend is also hosted here
-    # If running the HTML file directly from your local machine (file://),
-    # the origin might be 'null'. You can add it for local testing,
-    # but be cautious with it in production as it's less secure.
-    # "null"
-    "*" # For development/testing, allows all origins. REMOVE OR RESTRICT FOR PRODUCTION!
+    "https://lung-risk-alert-system.onrender.com", # Your API's own domain
+    "null" # <--- ADD THIS for local webview apps (like those made with Hopweb)
 ]
 
 app.add_middleware(
