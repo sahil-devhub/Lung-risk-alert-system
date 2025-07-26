@@ -7,13 +7,16 @@ from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
 app = FastAPI()
 
 # Define the origins that are allowed to make requests to your API.
-# For local app testing where the origin might be 'null' (e.g., in a webview from a local file).
-# For production, always specify exact domains and avoid 'null' or '*'.
+# "null" is crucial for apps running in webviews from local files (like Hopweb).
+# "https://lung-risk-alert-system.onrender.com" is included for clarity, though
+# it's the server's own domain.
 origins = [
     "http://localhost",
     "http://localhost:8080",
     "https://lung-risk-alert-system.onrender.com", # Your API's own domain
-    "null" # <--- ADD THIS for local webview apps (like those made with Hopweb)
+    "null" # <--- This is essential for apps running in a local webview (like Hopweb)
+    # If the above doesn't work, for *temporary testing only*, you can use:
+    # "*" # WARNING: This allows all origins and is NOT recommended for production.
 ]
 
 app.add_middleware(
@@ -25,6 +28,8 @@ app.add_middleware(
 )
 
 # Load your model and feature reference
+# Ensure 'lung_cancer_model.pkl' and 'feature_reference.pkl' are in the same directory
+# as your FastAPI application on Render.
 model = pickle.load(open("lung_cancer_model.pkl", "rb"))
 feature_ref = pickle.load(open("feature_reference.pkl", "rb"))
 
