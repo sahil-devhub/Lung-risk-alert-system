@@ -1,35 +1,28 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pickle
 import pandas as pd
-from fastapi.middleware.cors import CORSMiddleware # Import CORSMiddleware
 
 app = FastAPI()
 
-# Define the origins that are allowed to make requests to your API.
-# "null" is crucial for apps running in webviews from local files (like Hopweb).
-# "https://lung-risk-alert-system.onrender.com" is included for clarity, though
-# it's the server's own domain.
+# CORS configuration
 origins = [
     "http://localhost",
-    "http://localhost:8080",
-    "https://lung-risk-alert-system.onrender.com", # Your API's own domain
-    "null" # <--- This is essential for apps running in a local webview (like Hopweb)
-    # If the above doesn't work, for *temporary testing only*, you can use:
-    # "*" # WARNING: This allows all origins and is NOT recommended for production.
+    "http://localhost:5500",  # Common Live Server port
+    "http://127.0.0.1",      # Localhost IP
+    "http://127.0.0.1:5500", # Adjust based on your port
+    "*"                      # Allow all origins for testing (remove in production)
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,       # List of allowed origins
-    allow_credentials=True,      # Allow cookies/authentication headers to be sent
-    allow_methods=["*"],         # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],         # Allow all headers
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# Load your model and feature reference
-# Ensure 'lung_cancer_model.pkl' and 'feature_reference.pkl' are in the same directory
-# as your FastAPI application on Render.
 model = pickle.load(open("lung_cancer_model.pkl", "rb"))
 feature_ref = pickle.load(open("feature_reference.pkl", "rb"))
 
@@ -102,4 +95,3 @@ def predict(data: PatientData):
     except Exception as e:
         print("❌ Error:", e)
         return {"error": str(e)}
-
