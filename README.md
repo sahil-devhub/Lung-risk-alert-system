@@ -1,4 +1,4 @@
-# 🫁 Lung Risk Alert System
+# 🩺 Lung Risk Alert System
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
@@ -24,24 +24,25 @@ I built the **Lung Risk Alert System** to serve as a "First-Line Screening" tool
 
 ## 📸 Project Gallery
 
-### 🖥️ Landing Page
-The user-friendly interface allows anyone to input their data without technical or medical expertise.
-![Landing Page](landing.png)
+### 🖥️ User Interface & Prediction
+The landing page is designed for simplicity, allowing users to receive instant risk alerts without medical expertise.
 
-### 📊 Model Performance
-The underlying machine learning model is trained for high precision to ensure reliable risk alerts.
-![Model Report](model_report.png)
-
-### 🧪 Prediction Output
-Instant results with clear indicators of risk levels.
-![Prediction Output](predictionoutput%20.png)
-
-### 📈 Data Insights & Grouping
-Analyzing how symptoms correlate with lung cancer risk.
-![Symptoms Grouping](symptoms%20grouping.png)
-![Visual Representation](visual%20representation.png)
+| **Landing Page** | **Prediction Output** |
+| :---: | :---: |
+| ![Landing Page](screenshots/landing.png) | ![Prediction Output](screenshots/predictionoutput%20.png) |
 
 ---
+
+### 📊 Model Analytics & Data Insights
+The system is backed by a high-precision machine learning model and detailed data correlation analysis.
+
+| **Model Performance Report** | **Symptoms Grouping** |
+| :---: | :---: |
+| ![Model Report](screenshots/model_report.png) | ![Symptoms Grouping](screenshots/symptoms%20grouping.png) |
+
+| **Visual Data Representation** |
+| :---: |
+| ![Visual Representation](screenshots/visual%20representation.png) |---
 
 ## 🛠️ Tech Stack
 
@@ -50,7 +51,7 @@ Analyzing how symptoms correlate with lung cancer risk.
 * **Machine Learning:** Scikit-Learn, Random Forest Classifier
 * **Data Handling:** Pandas, NumPy
 * **Visualization:** Matplotlib, Seaborn
-* **Deployment:** Heroku/Streamlit Cloud
+* **Deployment:** Streamlit Cloud
 
 ---
 
@@ -98,10 +99,3 @@ To run this project locally:
   ```
   Sahil Kumar AI & Machine Learning Enthusiast
   ```
-
-
-### 💡 Tips for your README:
-* **Image Links:** I used the filenames you provided (e.g., `landing.png`). Ensure these images are in the **root folder** of your GitHub repository so they display correctly.
-* **Social Links:** Don't forget to update the "Developed By" section with your actual LinkedIn profile link.
-
-**Would you like me to help you write a professional LinkedIn post to share this project now?**
